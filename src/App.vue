@@ -1,20 +1,53 @@
 <template>
+ <main>
   <header class="header">
     <img scr ="#" alt="logo" class="header-logo">
     <h2>My Favorite Moves</h2>
   </header>  
-  <div class="movies">
-    <h3>All Movies</h3>
-    <Moves v->
-    {{movieStore.movies}}
+  <div class="tabs">
+    <button 
+      :class="['btn', {btn_green: movieStore.activTab === 1 }]" 
+      @click="setTab(1)"> 
+      Favorite
+    </button>
+    <button 
+      :class="['btn', {btn_green: movieStore.activTab === 2 }]"
+      @click="setTab(2)">
+      Search
+    </button>
   </div>
+  <div class="movies" v-if="movieStore.activTab === 1">
+    <div>
+      <h3>Watched Movies (count: {{ movieStore.watchedMovies.length }})</h3>
+      <Movie 
+        v-for = "movie of movieStore.watchedMovies" 
+        :key = "movie.id" 
+        :movie="movie" 
+      />
+    </div>
+    <h3>All Movies (count: {{ movieStore.movies.length }})</h3>
+    <Movie 
+      v-for = "movie of movieStore.movies" 
+      :key = "movie.id" 
+      :movie="movie" 
+    />
+    <!-- {{movieStore.movies}} -->
+  </div>
+  <div class="search" v-else>Search</div>
+ </main>
 </template>
 
 <script setup>
-   import {useMovieStore} from './stores/MovieStore'
-   import Movie from './components/Movie.vue'
+   import Movie from "./components/Movie.vue";
+   import {useMovieStore} from "./stores/MovieStore";
 
-   const movieStore =  useMovieStore();
+   const satTab = (id) => {
+    movieStore.setActiveTab(id)
+   }
+
+   const movieStore = useMovieStore();
+  //  console.log(movieStore);
+   
 </script>
 
 <style scoped>
@@ -47,6 +80,6 @@
 .tabs{
   display: flex;
   justify-content: center;
-  margin-button: 30px
+  margin-button: 30px;
 }
 </style>
