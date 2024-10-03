@@ -19,7 +19,7 @@
        </div>
 
        <div class="movie-buttons" v-else>
-        <button class="btn bta_green">Add
+        <button class="btn btn_green" @click="searchStore.addToUseMovies(movie)">Add
         </button>
        </div>
     </div>
@@ -29,8 +29,10 @@
 
 <script setup> 
  import { useMovieStore } from '../stores/MovieStore';
+ import { useSearchStore } from '../stores/SearchStore';
 
- const movieStore = useMovieStore()
+ const movieStore = useMovieStore();
+ const searchStore = useSearchStore();
  const props = defineProps({
   movie:{
         type: Object,
@@ -92,5 +94,8 @@
 }
 .movie-buttons-delete:hover{
   border-radius: 10px; 
+}
+.btn_green{
+  background: #37df5c;
 }
 </style>
